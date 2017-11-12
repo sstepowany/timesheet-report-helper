@@ -1,0 +1,9 @@
+base_url: http://parkeon.jira.com
+
+search_endpoint: /rest/api/2/search
+worklog_endpoint: /rest/api/2/issue/{}/worklog
+user_endpoint: /rest/api/2/user
+
+authentication:
+  user: jira_user_login
+  password: jira_user_password
