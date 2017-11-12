@@ -11,7 +11,7 @@ Operation manual
 2.3. Run setup command: "python setup.py".
 2.4. You can check if all dependencies from "requirements.txt" file were installed by writing command "pip list".
 
-3. Configure the toll.
+3. Configure the tool.
 3.1. Timesheet helper has two configuration files.
 3.2. First one is for communication with JIRA.
 3.2.1. Copy "jira_config_template.yaml".
