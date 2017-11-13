@@ -43,9 +43,9 @@ class TimesheetFormats(object):
         self._specific_background_color_format = self._workbook.add_format({
             'bg_color': self._specific_background_color
         })
-        self._specific_background_color_with_align_right_format = self._workbook.add_format({
+        self._specific_background_color_with_align_center_format = self._workbook.add_format({
             'bg_color': self._specific_background_color,
-            'align': 'right'
+            'align': 'center'
         })
         self._team_line_separator_format = self._workbook.add_format({
             'bold': True,
@@ -70,9 +70,6 @@ class TimesheetFormats(object):
         self._centered_text_with_specific_color_format = self._workbook.add_format({
             'bg_color': self._specific_background_color,
             'align': 'center'
-        })
-        self._aligned_right_text_format = self._workbook.add_format({
-            'align': 'right'
         })
         self._centered_and_bold_text_format = self._workbook.add_format({
             'bold': True,
@@ -113,8 +110,7 @@ class TimesheetFormats(object):
             'summary_total_row_format': self._summary_total_row_format,
             'centered_text_format': self._centered_text_format,
             'centered_and_bold_text_format': self._centered_and_bold_text_format,
-            'specific_background_color_with_align_right_format': self._specific_background_color_with_align_right_format,
-            'aligned_right_text_format': self._aligned_right_text_format,
+            'specific_background_color_with_align_center_format': self._specific_background_color_with_align_center_format,
             'centered_text_with_specific_color_format': self._centered_text_with_specific_color_format,
             'employee_level_text_format': self._employee_level_text_format
         }

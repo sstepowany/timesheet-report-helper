@@ -1,4 +1,5 @@
 from timesheets.worksheets.worksheetTemplates.employee_worksheet_template import EmployeeWorksheetTemplate
+from timesheets.worksheets.worksheetObjects.worksheet_cell import WorksheetCell
 
 
 class EmployeeWorksheet(EmployeeWorksheetTemplate):
@@ -28,9 +29,15 @@ class EmployeeWorksheet(EmployeeWorksheetTemplate):
 
             issues_index = employee_timesheet_issues.index(issue)
             issue_row = issues_index + self._first_data_row_index
-            employee_worksheet.write(issue_row, self._number_data_column_index, issues_index + 1)
-            employee_worksheet.write(issue_row, self._summary_data_column_index, issue_summary)
-            employee_worksheet.write(issue_row, self._task_id_data_column_index, issue_key)
+
+            issue_index_cell = WorksheetCell(issue_row, self._number_data_column_index, issues_index + 1, None)
+            self.write_to_cell(employee_worksheet, issue_index_cell)
+
+            issue_summary_cell = WorksheetCell(issue_row, self._summary_data_column_index, issue_summary, None)
+            self.write_to_cell(employee_worksheet, issue_summary_cell)
+
+            issue_key_cell = WorksheetCell(issue_row, self._task_id_data_column_index, issue_key, None)
+            self.write_to_cell(employee_worksheet, issue_key_cell)
 
             self.fill_user_worklog_data(employee_worksheet, self._formats_dict, employee_worklog_data,
                                         self._first_month_day_column_index, issue_key, timesheet_year,
