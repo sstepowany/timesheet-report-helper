@@ -128,7 +128,6 @@ class BaseWorksheetTemplate(BaseWorksheet):
                                    timesheet_last_month_day + self._first_month_day_column_index,
                                    formats_dict['table_row_summary_section_aligned_right_format'])
 
-
     def fill_man_days_summary_section(self, worksheet, formats_dict, man_days_row_index, timesheet_last_month_day,
                                       last_table_basic_column_header_index):
         # total_man_days_per_month_formula
