@@ -4,6 +4,7 @@ Operation manual
 1.1. Python installers are located in folder "wheels/pythonInstallers".
 1.2. Choose correct installer depending on a windows version (32 or 64bit).
 1.3. After installation make sure you have python executable added to the PATH variable.
+1.4. After installation make sure you have "pip" command executable added to the PATH variable. (python_dir/Scripts)
 
 2. Install dependencies for report helper.
 2.1. Open command line tool.

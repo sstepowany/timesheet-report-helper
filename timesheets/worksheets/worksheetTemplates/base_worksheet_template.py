@@ -88,7 +88,7 @@ class BaseWorksheetTemplate(BaseWorksheet):
             total_worklog_time_spent_for_day_formula_cell = WorksheetCell(time_summary_row_index,
                                                                           month_day_column_index, None, None)
             self.write_sum_formula(worksheet, total_worklog_time_spent_for_day_formula_range,
-                                   total_worklog_time_spent_for_day_formula_cell, None)
+                                   total_worklog_time_spent_for_day_formula_cell, formats_dict['table_header_format'])
             if man_days_row_index is not None:
                 man_days_counting_formula_range = \
                     WorksheetCellsRange(time_summary_row_index, month_day_column_index, time_summary_row_index,

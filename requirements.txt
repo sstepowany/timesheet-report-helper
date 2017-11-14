@@ -4,3 +4,4 @@ urllib3 == 1.22
 idna == 2.6
 chardet == 3.0.4
 certifi == 2017.11.5
+PyYaml == 3.12
