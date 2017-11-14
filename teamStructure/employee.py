@@ -8,7 +8,7 @@ class Employee(object):
         self._employee_jira_name = employee_jira_name
         self._timesheet_data = timesheet_data_object
         self._employee_configuration_data = employee_configuration_data
-        self._trainings_and_other_projects_key = 'trainings/other_porjects'
+        self._trainings_and_other_projects_key = 'trainings/other_projects'
         self._holidays_and_sick_leaves_key = 'holidays/sick_leaves'
 
         self._employee_name = self._timesheet_data.get_employee_display_name(self._employee_jira_name)
