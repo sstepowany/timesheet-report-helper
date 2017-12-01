@@ -9,6 +9,7 @@ class TimesheetData(object):
     def __init__(self, jira_rest_configuration, timesheet_date):
         self._jira_rest = JiraRest(jira_rest_configuration)
         self._timesheet_date = timesheet_date
+        self._employee_jira_data_parser = EmployeeJiraDataParser()
 
     def get_timesheet_data_for_employee(self, employee_jira_name):
         TimesheetLogger().log_on_console("Getting employee: {}, timesheet data.".format(employee_jira_name))
@@ -24,9 +25,9 @@ class TimesheetData(object):
         for issue in employee_timesheet_issues:
             issue_key = issue['key']
             issue_id = issue['issue_id']
-            employee_worklog_data[issue_key] = list()
             response = self._jira_rest.get_issue_worklog(issue_id)
-            issue_worklog_data = EmployeeJiraDataParser().parse_employe_worklog_data(
+            employee_worklog_data[issue_key] = list()
+            issue_worklog_data = self._employee_jira_data_parser.parse_employe_worklog_data_2(
                 employee_worklog_data[issue_key], employee_jira_name, response.json())
             employee_worklog_data[issue_key] = issue_worklog_data
         return employee_worklog_data

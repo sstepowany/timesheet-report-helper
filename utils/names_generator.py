@@ -8,11 +8,12 @@ class NamesGenerator(object):
         self._report_name_template = "{} - timesheet report - {} - {}.xlsx"
         self._date_format_template = "{}.{}.{}"
         self._timesheets_reports_set_folder_name_template = "{} - {}"
+        self._date = Date()
 
     def _prepare_generated_name_basic_data(self):
-        timesheet_year = Date().get_timesheet_year(self._timesheet_data['year'])
+        timesheet_year = self._date.get_timesheet_year(self._timesheet_data['year'])
         timesheet_month = self._timesheet_data['month']
-        month_length = Date().get_month_days_count(timesheet_year, timesheet_month)
+        month_length = self._date.get_month_days_count(timesheet_year, timesheet_month)
         from_date = self._date_format_template.format(timesheet_year, timesheet_month, 1)
         to_date = self._date_format_template.format(timesheet_year, timesheet_month, month_length)
         return from_date, to_date

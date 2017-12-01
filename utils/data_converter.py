@@ -8,7 +8,7 @@ class DataConverter(object):
     def split_configuration_special_days_to_list(self, list_configuration):
         days_list = list()
         if list_configuration != self._empty_days_list_maker:
-            days_ranges_and_days_list = list_configuration.split(self._ranges_separator)
+            days_ranges_and_days_list = str(list_configuration).split(self._ranges_separator)
             for days_range_or_day in days_ranges_and_days_list:
                 if self._range_separator in days_range_or_day:
                     days_range = days_range_or_day.split(self._range_separator)
