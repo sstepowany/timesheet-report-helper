@@ -18,7 +18,7 @@ class BaseWorksheet(object):
         self._indirect_formula_template = "=INDIRECT(\"'\"&{}&\"'!{}\")"
         self._sumif_formula_template = '=SUMIF({},{},{})'
         self._product_formula_template = '=PRODUCT({},{})'
-        self._man_days_counting_formula_template = "={}/7"
+        self._man_days_counting_formula_template = "={}/{}"
 
     @staticmethod
     def write_to_cell(worksheet, cell):
@@ -151,12 +151,13 @@ class BaseWorksheet(object):
         worksheet.merge_range(formula_first_cell_row, formula_first_cell_column, formula_second_cell_row,
                               formula_second_cell_column, formula, cells_format)
 
-    def write_man_days_counting_formula(self, worksheet, formula_cells_range, formula_cell, cells_format=None):
+    def write_man_days_counting_formula(self, worksheet, formula_cells_range, formula_cell, man_days_hours,
+                                        cells_format=None):
         formula_first_cell_row, formula_first_cell_column, formula_second_cell_row, formula_second_cell_column = \
             formula_cells_range.get_range_cells_coordinates()
 
         converted_formula_cells_range = xl_range(formula_first_cell_row, formula_first_cell_column,
                                                  formula_second_cell_row, formula_second_cell_column)
         formula_cell_row, formula_cell_column = formula_cell.get_cell_coordinates()
-        formula = self._man_days_counting_formula_template.format(converted_formula_cells_range)
+        formula = self._man_days_counting_formula_template.format(converted_formula_cells_range, man_days_hours)
         worksheet.write_formula(formula_cell_row, formula_cell_column, formula, cells_format)

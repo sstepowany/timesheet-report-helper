@@ -28,8 +28,8 @@ class BaseWorksheetTemplate(BaseWorksheet):
         super(BaseWorksheetTemplate, self).__init__()
 
     def fill_worksheet_with_template(self, worksheet, formats_dict, timesheet_year, timesheet_month, rows_count,
-                                     last_table_basic_column_header_index, include_man_days_data=True,
-                                     include_total_per_task_section=True):
+                                     last_table_basic_column_header_index, man_days_hours=1,
+                                     include_man_days_data=True, include_total_per_task_section=True):
         timesheet_last_month_day = self._date.get_month_days_count(timesheet_year, timesheet_month)
         self.fill_worksheet_with_basic_month_data(worksheet, formats_dict, self._table_columns_names_list,
                                                   timesheet_last_month_day, include_total_per_task_section)
@@ -41,7 +41,7 @@ class BaseWorksheetTemplate(BaseWorksheet):
         else:
             man_days_row_index = None
         self.fill_worksheet_with_month_days_specific_data(worksheet, formats_dict, timesheet_last_month_day, rows_count,
-                                                          time_summary_row_index, man_days_row_index)
+                                                          time_summary_row_index, man_days_row_index, man_days_hours)
         self.fill_timesheet_date_data(worksheet, formats_dict, timesheet_month, timesheet_year,
                                       timesheet_last_month_day)
         self.fill_totals_counting_columns(worksheet, formats_dict, timesheet_last_month_day,
@@ -52,7 +52,7 @@ class BaseWorksheetTemplate(BaseWorksheet):
                                                 include_total_per_task_section)
 
     def fill_worksheet_with_basic_month_data(self, worksheet, formats_dict, table_columns_names_list,
-                                               timesheet_last_month_day, include_total_per_task_section):
+                                            timesheet_last_month_day, include_total_per_task_section):
         for column_name in table_columns_names_list:
             column_header_cell = WorksheetCell(self._day_row_index, table_columns_names_list.index(column_name),
                                                column_name, formats_dict['table_header_format'])
@@ -63,8 +63,8 @@ class BaseWorksheetTemplate(BaseWorksheet):
         self.set_columns(worksheet, day_columns_range)
 
         summary_columns_range = WorksheetColumnsRange(timesheet_last_month_day + self._first_month_day_column_index,
-                             timesheet_last_month_day + self._first_month_day_column_index,
-                             self._summary_column_width)
+                                                      timesheet_last_month_day + self._first_month_day_column_index,
+                                                      self._summary_column_width)
         self.set_columns(worksheet, summary_columns_range)
 
         if include_total_per_task_section is False:
@@ -75,7 +75,8 @@ class BaseWorksheetTemplate(BaseWorksheet):
             self.set_columns(worksheet, summary_total_per_tasks_columns_range)
 
     def fill_worksheet_with_month_days_specific_data(self, worksheet, formats_dict, timesheet_last_month_day,
-                                                     issues_count, time_summary_row_index, man_days_row_index):
+                                                     issues_count, time_summary_row_index, man_days_row_index,
+                                                     man_days_hours):
         for day in range(0, timesheet_last_month_day):
             month_day_column_index = day + self._first_month_day_column_index
             month_day_cell = WorksheetCell(self._day_row_index, month_day_column_index, day + 1,
@@ -96,7 +97,7 @@ class BaseWorksheetTemplate(BaseWorksheet):
                 man_days_counting_formula_cell = \
                     WorksheetCell(man_days_row_index, month_day_column_index, None, None)
                 self.write_man_days_counting_formula(worksheet, man_days_counting_formula_range,
-                                                     man_days_counting_formula_cell,
+                                                     man_days_counting_formula_cell, man_days_hours,
                                                      formats_dict['table_row_summary_section_format'])
 
     def fill_timesheet_date_data(self, worksheet, formats_dict, timesheet_month, timesheet_year,

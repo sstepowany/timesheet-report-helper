@@ -7,6 +7,9 @@ class ProjectTeamsBuilder(object):
     def __init__(self):
         self._teams_container = TeamsContainer()
 
+    def clean_teams_container(self):
+        self._teams_container.clean_list()
+
     def build_project_team(self, timesheet_project_configuration, timesheet_data_object):
         for team in timesheet_project_configuration:
             employees_container = EmployeesContainer()

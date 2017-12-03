@@ -14,6 +14,7 @@ class TimesheetReport(object):
 
     def __init__(self):
         self._teams_container = None
+        self._project_teams_builder = ProjectTeamsBuilder()
         self._timesheet_report_configuration = Configuration().get_timesheet_configuration()
         self._jira_configuration = Configuration().get_jira_configuration()
         self._timesheet_date = self._timesheet_report_configuration['timesheet_date']
@@ -24,21 +25,25 @@ class TimesheetReport(object):
         self._timesheet_reports_folder = 'reports'
 
     def create_timesheet(self, project_configuration, reports_set_folder, timesheet_name_prefix):
+        TimesheetLogger().log_on_console("=" * 50)
         TimesheetLogger().log_on_console("Started creating timesheet: {}.".format(timesheet_name_prefix))
         report_name = self._names_generator.generate_report_name(timesheet_name_prefix)
         if not os.path.exists(os.path.join(self._timesheet_reports_folder, reports_set_folder)):
             os.makedirs(os.path.join(self._timesheet_reports_folder, reports_set_folder))
         workbook = xlsxwriter.Workbook(os.path.join(self._timesheet_reports_folder, reports_set_folder, report_name))
         timesheet = Timesheet(workbook)
-        self._teams_container = ProjectTeamsBuilder().build_project_team(
+        self._project_teams_builder.clean_teams_container()
+        self._teams_container = self._project_teams_builder.build_project_team(
             project_configuration['teams'], self._timesheet_data)
         teams_list = self._teams_container.get_teams_list()
         timesheet.add_summary_worksheet(teams_list, self._timesheet_date, self._national_holidays_list,
                                         project_configuration['po_number'], project_configuration['man_days_costs'])
-        timesheet.add_statistics_worksheet(teams_list, self._timesheet_date)
-        timesheet.add_worksheets_for_employees(teams_list, self._timesheet_date)
+        timesheet.add_statistics_worksheet(teams_list, self._timesheet_date, project_configuration['man_day_hours'])
+        timesheet.add_worksheets_for_employees(teams_list, self._timesheet_date, project_configuration['man_day_hours'])
         timesheet.save_timesheet()
+        TimesheetLogger().log_on_console("*" * 50)
         TimesheetLogger().log_on_console("Timesheet: {} created.".format(timesheet_name_prefix))
+        TimesheetLogger().log_on_console("=" * 50)
 
     def create_timesheets(self):
         TimesheetLogger().log_on_console("Started creating timesheets set.")

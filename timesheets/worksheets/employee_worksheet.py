@@ -9,12 +9,12 @@ class EmployeeWorksheet(EmployeeWorksheetTemplate):
         super(EmployeeWorksheet, self).__init__()
 
     def prepare_worksheet_for_employee(self, employee_worksheet, employee_timesheet_issues, employee_worklog_data,
-                                       timesheet_date):
+                                       timesheet_date, man_days_hours):
         timesheet_month = timesheet_date['month']
         timesheet_year = self._date.get_timesheet_year(timesheet_date['year'])
         issues_count = len(employee_timesheet_issues)
         self.fill_employee_worksheet_with_template(employee_worksheet, self._formats_dict, timesheet_year,
-                                                   timesheet_month, issues_count)
+                                                   timesheet_month, issues_count, man_days_hours)
 
         for issue in employee_timesheet_issues:
             issue_summary = issue['summary']

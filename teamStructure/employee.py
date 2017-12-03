@@ -1,5 +1,6 @@
 from utils.employee_jira_data_parser import EmployeeJiraDataParser
 from utils.data_converter import DataConverter
+from utils.logger import TimesheetLogger
 
 
 class Employee(object):
@@ -13,6 +14,7 @@ class Employee(object):
         self._trainings_and_other_projects_key = 'trainings/other_projects'
         self._holidays_and_sick_leaves_key = 'holidays/sick_leaves'
 
+        TimesheetLogger().log_on_console("*" * 50)
         self._employee_name = self._timesheet_data.get_employee_display_name(self._employee_jira_name)
         self._employee_timesheet_data = self._timesheet_data.get_timesheet_data_for_employee(self._employee_jira_name)
         self._employee_timesheet_issues = self._employee_jira_data_parser.get_jira_issues(self._employee_timesheet_data)

@@ -20,14 +20,14 @@ class StatisticsWorksheet(StatisticsWorksheetTemplate):
         }
         super(StatisticsWorksheet, self).__init__()
 
-    def prepare_statistics_worksheet(self, statistics_worksheet, teams_list, timesheet_date):
+    def prepare_statistics_worksheet(self, statistics_worksheet, teams_list, timesheet_date, man_days_hours):
         timesheet_month = timesheet_date['month']
         timesheet_year = self._date.get_timesheet_year(timesheet_date['year'])
         teams_issues_count = 0
         for team in teams_list:
             teams_issues_count += team.get_team_issues_count()
         self.fill_statistics_worksheet_with_template(statistics_worksheet, self._formats_dict, timesheet_year,
-                                                     timesheet_month, teams_issues_count)
+                                                     timesheet_month, teams_issues_count, man_days_hours)
 
         issues_count = 0
         for team in teams_list:
